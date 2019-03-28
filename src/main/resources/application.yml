@@ -1,8 +1,20 @@
+#自定义变量
+appKey: 1
+appSecret: 1
+bucket: lynn
+endPoint: https://www.aliyun.com
+#spring api
 debug: true
 spring:
+  profiles:
+    active: dev  #多环境配置
   devtools:
     restart:
       enabled: true  #设置开启热部署
+  mvc:
+    view:
+     prefix : /sdibt/group/resources/templates
+     suffix : .html
   freemarker:
       cache: false    #页面不加载缓存，修改即时生效
   datasource:
@@ -12,9 +24,19 @@ spring:
       username: root
       password: 123456
   jpa:
-    hibernate:
-      ddl-auto: update  # 第一次建表create  后面用update，要不然每次重启都会新建表
+    database: MYSQL
     show-sql: true
+    hibernate:
+      namingStrategy: org.hibernate.cfg.ImprovedNamingStrategy
+      ddl-auto: update  # 第一次建表create  后面用update，要不然每次重启都会新建表
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
 server:
+  port: 8080
   servlet:
     context-path: /springboot-jpa
+  tomcat:
+    max-threads: 1000
+    min-spare-threads: 50
+  connection-timeout: 5000
